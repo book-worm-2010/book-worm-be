@@ -5,14 +5,14 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.1-stretch-node
+      - image: circleci/ruby:2.6.3-stretch-node
     executor: ruby/default
     steps:
       - checkout
       - run: bundle install
   test:
     docker: 
-      - image: circleci/ruby:2.7.1-stretch-node
+      - image: circleci/ruby:2.6.3-stretch-node
     steps:
       - checkout
       - run: bundle exec rspec
