@@ -18,13 +18,13 @@ class Api::V1::BooksController < ApplicationController
   def create
     book = Book.new(book_params)
     if book.save
-      render json: BookSerializer.new(item), status: :created
+      render json: BookSerializer.new(book), status: :created
     else
       render json: { data: book.errors }, status: :conflict
     end
   end
 
-  def update 
+  def update
     book = Book.find(params[:title])
     if item.update(item_params)
       render json: BookSerializer.new(book), status: :accepted
@@ -37,10 +37,10 @@ class Api::V1::BooksController < ApplicationController
     render json: Book.destroy(params[:id])
   end
 
-  def find_all 
+  def find_all
     if params[:title].present?
       render json: BookSerializer.new(Book.search(params[:title]))
-    else 
+    else
       render json: { data: [] }, status: :bad_request
     end
   end
