@@ -16,13 +16,13 @@ ActiveRecord::Schema.define(version: 2021_04_07_230943) do
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: :cascade do |t|
-    t.bigint "student_books_id", null: false
+    t.bigint "student_book_id", null: false
     t.date "date"
     t.integer "minutes"
     t.integer "page_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["student_books_id"], name: "index_bookmarks_on_student_books_id"
+    t.index ["student_book_id"], name: "index_bookmarks_on_student_book_id"
   end
 
   create_table "books", force: :cascade do |t|
@@ -34,15 +34,15 @@ ActiveRecord::Schema.define(version: 2021_04_07_230943) do
   end
 
   create_table "student_books", force: :cascade do |t|
-    t.bigint "students_id", null: false
-    t.bigint "books_id", null: false
+    t.bigint "student_id", null: false
+    t.bigint "book_id", null: false
     t.string "status"
     t.integer "review"
     t.string "reivew_comment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["books_id"], name: "index_student_books_on_books_id"
-    t.index ["students_id"], name: "index_student_books_on_students_id"
+    t.index ["book_id"], name: "index_student_books_on_book_id"
+    t.index ["student_id"], name: "index_student_books_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_230943) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "bookmarks", "student_books", column: "student_books_id"
-  add_foreign_key "student_books", "books", column: "books_id"
-  add_foreign_key "student_books", "students", column: "students_id"
+  add_foreign_key "bookmarks", "student_books"
+  add_foreign_key "student_books", "books"
+  add_foreign_key "student_books", "students"
 end
