@@ -16,7 +16,8 @@ jobs:
       - image: circleci/ruby:2.7.1-node
     steps:
       - checkout
-      - run: rspec
+      - run:
+      - ruby/rspec-test
 
 workflows:
   build_and_test: 
