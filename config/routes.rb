@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :students do
         get 'books', on: :collection
       end
+      resources :student_books, only: :create
     end
   end
 end

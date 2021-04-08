@@ -1,36 +1,23 @@
 require 'rails_helper'
 
-describe 'Students API' do
+describe 'StudentBooks API' do
   describe 'dashboard' do
-    it 'sends a list of books' do
-      books = create_list(:book, 5)
+    it 'creates a new relationship' do
       student = create(:student)
-      books.each do |book|
-        StudentBook.create!(book_id: book.id, student_id: student.id)
-      end
-
+      book = create(:book)
       data = {
-        "id": student.id
+        "student_id": student.id,
+        "book_id": book.id
       }
 
-      get books_api_v1_students_path, params: data
+      #get api/v1/student_books
+      post api_v1_student_books_path, params: data
+
       expect(response).to be_successful
-      found_books = JSON.parse(response.body, symbolize_names: true)
-      expect(found_books[:data].count).to eq(5)
-
-      found_books[:data].each do |book|
-        expect(book).to have_key(:id)
-        expect(book[:id]).to be_an(String)
-
-        expect(book[:attributes]).to have_key(:title)
-        expect(book[:attributes][:title]).to be_a(String)
-
-        expect(book[:attributes]).to have_key(:author)
-        expect(book[:attributes][:author]).to be_a(String)
-
-        expect(book[:attributes]).to have_key(:pages)
-        expect(book[:attributes][:pages]).to be_a(Numeric)
-      end
+      new_book = JSON.parse(response.body, symbolize_names: true)[:data]
+      expect(new_book[:attributes][:student_id]).to eq(student.id)
+      expect(new_book[:attributes][:book_id]).to eq(book.id)
+      expect(new_book[:attributes][:status]).to eq(nil)
     end
   end
 end
