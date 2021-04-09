@@ -5,11 +5,58 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.1-stretch-node
+      - image: circleci/ruby:2.7.1-node
     executor: ruby/default
     steps:
       - checkout
-      - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
+      - run: gem install bundler -v 2.1.4
+      - run: bundle install
+  test:
+    parallelism: 3
+    docker: 
+      - image: circleci/ruby:2.7.1-node
+      - image: circleci/postgres:11.0-alpine
+        environment: 
+          POSTGRES_USER: book_worm_be
+          POSTGRES_DB: book_worm_be_production
+          POSTGRES_PASSWORD: ""
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      PGHOST: 127.0.0.1
+      PGUSER: book_worm_be
+      PGPASSWORD: ""
+      RAILS_ENV: test
+    steps:
+      - checkout
+      - run: gem install bundler -v 2.1.4
+      - run: bundle install
+      - run: bundle exec rails db:{create,migrate} RAILS_ENV=test
+      - run: bundle exec rspec
+  deploy: 
+    machine: 
+        enabled: true
+    environment:
+      HEROKU_APP: "book-worm-be"
+    steps: 
+      - checkout
+      - run: 
+          command: |
+            git push heroku main
+            heorku run rake db:migrate
+            sleep 5
+            heroku restart
+
+workflows:
+  build_and_test_and_deploy: 
+    jobs: 
+      - build
+      - test: 
+          requires: 
+            - build
+      - deploy:
+          requires:
+            - build
+          filters: 
+            branches:
+              only: main
