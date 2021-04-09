@@ -36,9 +36,9 @@ jobs:
       - run: bundle exec rspec
   deploy: 
     executor: heroku/default
-    environment:
-      HEROKU_APP: $HEROKU_APP_NAME
-      HEROKU_API_KEY: $HEROKU_API_KEY
+    # environment:
+      # HEROKU_APP: $HEROKU_APP_NAME
+      # HEROKU_API_KEY: $HEROKU_API_KEY
     steps: 
       - checkout
       - heroku/install
@@ -46,7 +46,9 @@ jobs:
           command: >
             echo "The command above installs Heroku, the command below deploys.
             What you do inbetween is up to you!"
-      - heroku/deploy-via-git
+      - heroku/deploy-via-git:
+            api-key: $HEROKU_API_KEY
+            app-name: $HEROKU_APP_NAME
 
 workflows:
   build_and_test_and_deploy: 
