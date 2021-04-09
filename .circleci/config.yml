@@ -17,9 +17,9 @@ jobs:
       - image: circleci/ruby:2.7.1-node
       - image: circleci/postgres:1.1
         environment: 
-        POSTGRES_USER: book_worm_be
-        POSTGRES_DB: book_worm_be_production
-        POSTGRES_PASSWORD: ""
+          POSTGRES_USER: book_worm_be
+          POSTGRES_DB: book_worm_be_production
+          POSTGRES_PASSWORD: ""
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
