@@ -37,8 +37,8 @@ jobs:
   deploy: 
     executor: heroku/default
     environment:
-      HEROKU_APP: book_worm_be
-      HEROKU_API_KEY: $HEROKU_API_KEY
+      HEROKU_APP: echo $HEROKU_APP_NAME
+      HEROKU_API_KEY: echo $HEROKU_API_KEY
     steps: 
       - checkout
       - run: 
