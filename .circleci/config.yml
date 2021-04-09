@@ -36,7 +36,7 @@ jobs:
   deploy: 
     machine: 
         enabled: true
-    environement:
+    environment:
       HEROKU_APP: "book-worm-be"
     steps: 
       - checkout
