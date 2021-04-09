@@ -34,22 +34,18 @@ jobs:
       - run: bundle install
       - run: bundle exec rails db:{create,migrate} RAILS_ENV=test
       - run: bundle exec rspec
-  # deploy: 
-  #   machine: 
-  #       enabled: true
-  #   environment:
-  #     HEROKU_APP: $HEROKU_APP
-  #     HEROKU_API_KEY: $HEROKU_API_KEY
-  #   steps: 
-  #     - checkout
-  #     - run: curl https://cli-assets.heroku.com/install.sh | sh
-  #     - run: git remote add heroku https://git.heroku.com/book-worm-be.git
-  #     - run: 
-  #         command: |
-  #           git push heroku main
-  #           heroku run rake db:migrate
-  #           sleep 5
-  #           heroku restart
+  deploy: 
+    executor: heroku/default
+    environment:
+      HEROKU_APP: book_worm_be
+      HEROKU_API_KEY: $HEROKU_API_KEY
+    steps: 
+      - checkout
+      - run: 
+          command: >
+            echo "The command above installs Heroku, the command below deploys.
+            What you do inbetween is up to you!"
+      - heroku/deploy-via-git
 
 workflows:
   build_and_test_and_deploy: 
@@ -58,7 +54,7 @@ workflows:
       - test: 
           requires: 
             - build
-      - heroku/deploy-via-git:
+      - deploy:
           requires:
             - build
             - test
