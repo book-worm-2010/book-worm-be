@@ -40,6 +40,7 @@ jobs:
       HEROKU_APP: "book-worm-be"
     steps: 
       - checkout
+      - run: bash .circleci/setup-heroku.sh
       - run: 
           command: |
             git push heroku main
