@@ -37,7 +37,8 @@ jobs:
     machine: 
         enabled: true
     environment:
-      HEROKU_APP: "book-worm-be"
+      HEROKU_APP: $HEROKU_APP
+      HEROKU_API_KEY: $HEROKU_API_KEY
     steps: 
       - checkout
       - run: curl https://cli-assets.heroku.com/install.sh | sh
