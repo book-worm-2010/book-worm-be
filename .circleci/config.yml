@@ -45,7 +45,7 @@ jobs:
       - run: 
           command: |
             git push heroku main
-            heorku run rake db:migrate
+            heroku run rake db:migrate
             sleep 5
             heroku restart
 
