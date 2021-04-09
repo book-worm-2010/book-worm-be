@@ -33,6 +33,19 @@ jobs:
       - run: bundle install
       - run: bundle exec rails db:{create,migrate} RAILS_ENV=test
       - run: bundle exec rspec
+  deploy: 
+    machine: 
+      enabled: true
+    environement:
+      HEROKU_APP: "book-worm-be"
+    steps: 
+      - checkout
+      - run: 
+          command: |
+            git push heroku main
+            heorku run rake db:migrate
+            sleep 5
+            heroku restart
 
 workflows:
   build_and_test: 
@@ -41,4 +54,12 @@ workflows:
       - test: 
           requires: 
             - build
-
+  heroku_deploy: 
+    jobs:
+      - build 
+      - deploy:
+          requires:
+            - build
+          filters: 
+            branches:
+              only: main
