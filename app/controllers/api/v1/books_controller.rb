@@ -26,7 +26,7 @@ class Api::V1::BooksController < ApplicationController
 
   def update
     book = Book.find(params[:title])
-    if item.update(item_params)
+    if book.update(book_params)
       render json: BookSerializer.new(book), status: :accepted
     else
       render json: { data: book.errors }, status: :not_found
