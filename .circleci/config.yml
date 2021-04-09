@@ -41,7 +41,7 @@ jobs:
     steps: 
       - checkout
       - run: curl https://cli-assets.heroku.com/install.sh | sh
-      - run: git remote add https://git.heroku.com/book-worm-be.git
+      - run: git remote add heroku https://git.heroku.com/book-worm-be.git
       - run: 
           command: |
             git push heroku main
