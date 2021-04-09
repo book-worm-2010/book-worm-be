@@ -15,7 +15,7 @@ jobs:
     parallelism: 3
     docker: 
       - image: circleci/ruby:2.7.1-node
-      - image: circleci/postgres:1.1
+      - image: circleci/postgres:11.0-alpine
         environment: 
           POSTGRES_USER: book_worm_be
           POSTGRES_DB: book_worm_be_production
