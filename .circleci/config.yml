@@ -12,13 +12,25 @@ jobs:
       - run: gem install bundler -v 2.1.4
       - run: bundle install
   test:
+    parallelism: 3
     docker: 
       - image: circleci/ruby:2.7.1-node
+      - image: circleci/postgres:1.1
+        environment: 
+        POSTGRES_USER: book_worm_be
+        POSTGRES_DB: book_worm_be_production
+        POSTGRES_PASSWORD: ""
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      PGHOST: 127.0.0.1
+      PGUSER: book_worm_be
+      PGPASSWORD: ""
+      RAILS_ENV: test
     steps:
       - checkout
       - run: gem install bundler -v 2.1.4
       - run: bundle install
-      - run: bundle exec rails db:schema:load --trace
       - run: bundle exec rspec
 
 workflows:
