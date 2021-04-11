@@ -32,5 +32,42 @@ describe 'Students API' do
         expect(book[:attributes][:pages]).to be_a(Numeric)
       end
     end
+
+    it "sends a list of bookmarks" do
+      book = create(:book)
+      student = create(:student)
+      student_book = StudentBook.create!(student_id: student.id, book_id: book.id)
+      Bookmark.create!(student_book_id: student_book.id, date: Date.today, minutes: 45, page_number: 42 )
+      Bookmark.create!(student_book_id: student_book.id, date: Date.today, minutes: 25, page_number: 60 )
+
+      book2 = create(:book)
+      student_book2 = StudentBook.create!(student_id: student.id, book_id: book2.id)
+      Bookmark.create!(student_book_id: student_book2.id, date: Date.today, minutes: 45, page_number: 42 )
+      Bookmark.create!(student_book_id: student_book2.id, date: Date.today, minutes: 25, page_number: 60 )
+
+      data = {
+        "id": student.id
+      }
+
+      get bookmarks_api_v1_students_path, params: data
+      expect(response).to be_successful
+      found_bookmarks = JSON.parse(response.body, symbolize_names: true)
+      expect(found_bookmarks[:data].count).to eq(4)
+
+      found_bookmarks[:data].each do |bookmark|
+
+        expect(bookmark).to have_key(:id)
+        expect(bookmark[:id]).to be_an(String)
+
+        expect(bookmark[:attributes]).to have_key(:date)
+        expect(bookmark[:attributes][:date]).to be_a(String)
+
+        expect(bookmark[:attributes]).to have_key(:minutes)
+        expect(bookmark[:attributes][:minutes]).to be_a(Numeric)
+
+        expect(bookmark[:attributes]).to have_key(:page_number)
+        expect(bookmark[:attributes][:page_number]).to be_a(Numeric)
+      end
+    end
   end
 end
