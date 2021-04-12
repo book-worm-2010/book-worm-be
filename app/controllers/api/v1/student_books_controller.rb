@@ -5,7 +5,7 @@ class Api::V1::StudentBooksController < ApplicationController
     if student_book.save
       render json: StudentBookSerializer.new(student_book), status: :created
     else
-      render json: { data: book.errors }, status: :conflict
+      render json: { data: {} }, status: :conflict
     end
   end
 
