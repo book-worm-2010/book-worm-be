@@ -4,10 +4,18 @@ describe 'StudentBooks API' do
   describe 'dashboard' do
     it 'creates a new relationship' do
       student = create(:student)
-      book = create(:book)
-      data = {
-        "student_id": student.id,
-        "book_id": book.id
+      different_book = create(:book)
+      book = Book.create(title: "Harry Potter and the Sorcerers Stone",
+                         author: "J.K. Rowling",
+                         pages: 345)
+      data =
+       {
+         student_id: student.id,
+         book: {
+           title: "Harry Potter and the Sorcerers Stone",
+           author: "J.K. Rowling",
+           pages: 345
+         }
       }
 
       #get api/v1/student_books
@@ -17,6 +25,7 @@ describe 'StudentBooks API' do
       new_book = JSON.parse(response.body, symbolize_names: true)[:data]
       expect(new_book[:attributes][:student_id]).to eq(student.id)
       expect(new_book[:attributes][:book_id]).to eq(book.id)
+      expect(new_book[:attributes][:book_id]).to_not eq(different_book.id)
       expect(new_book[:attributes][:status]).to eq(nil)
     end
 
