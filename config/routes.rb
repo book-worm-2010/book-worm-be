@@ -7,8 +7,10 @@ Rails.application.routes.draw do
       end
       resources :students do
         get 'books', on: :collection
+        get 'bookmarks', on: :collection
       end
-      resources :student_books, only: :create
+      resources :student_books, only: %i[create update]
+      resources :bookmarks, only: :create
     end
   end
 end
