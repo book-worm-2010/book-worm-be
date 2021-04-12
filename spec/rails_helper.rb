@@ -65,7 +65,7 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods
-  
+
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|
       with.test_framework :rspec
@@ -76,7 +76,7 @@ RSpec.configure do |config|
   VCR.configure do |config|
     config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
     config.hook_into :webmock
-    # config.filter_sensitive_data('<mapquest_api_key>') { ENV['mapquest_api_key'] }
+    config.filter_sensitive_data('<GOOGLE_API_KEY>') { ENV['GOOGLE_API_KEY'] }
     # config.filter_sensitive_data('<openweather_api_key>') { ENV['openweather_api_key'] }
     # config.filter_sensitive_data('<unsplash_api_key>') { ENV['unsplash_api_key'] }
     config.configure_rspec_metadata!
