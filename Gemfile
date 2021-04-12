@@ -36,7 +36,7 @@ group :development do
   gem 'listen', '~> 3.3'
 end
 
-group :test do 
+group :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'launchy'

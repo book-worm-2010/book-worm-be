@@ -100,9 +100,10 @@ describe "Books API" do
   end
 
   describe "create" do
-    it "creates a new book" do
-
+    it "creates a new book and relationship" do
+      student = create(:student)
       data = {
+        student_id: student.id,
         book: {
         title: "Harry Potter and the Sorcerers Stone",
         author: "J.K. Rowling",
