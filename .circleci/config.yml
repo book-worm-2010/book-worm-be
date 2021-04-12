@@ -17,7 +17,7 @@ jobs:
       - save_cache: 
           key: v1-{{ checksum "Gemfile.lock"}}
           paths: 
-            - "venv"
+            - vendor/bundle
   test:
     parallelism: 3
     docker: 
@@ -44,12 +44,11 @@ jobs:
       - run: bundle exec rspec
       - save_cache:
           key: v1-{{ checksum "Gemfile.lock"}}
-          paths: "venv"
+          paths: vendor/bundle
   deploy: 
     executor: heroku/default
     steps: 
       - checkout
-      - run: bundle install
       - heroku/install
       - heroku/deploy-via-git
 
