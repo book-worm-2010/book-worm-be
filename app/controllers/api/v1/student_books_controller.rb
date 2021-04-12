@@ -1,6 +1,7 @@
 class Api::V1::StudentBooksController < ApplicationController
   def create
-    student_book = StudentBook.new(student_book_params)
+    book = Book.find_or_create_by(book_params)
+    student_book = StudentBook.new(student_id: params[:student_id], book_id: book.id)
     if student_book.save
       render json: StudentBookSerializer.new(student_book), status: :created
     else
@@ -20,5 +21,9 @@ class Api::V1::StudentBooksController < ApplicationController
 
   def student_book_params
     params.permit(:student_id, :book_id, :status, :review, :reivew_comment)
+  end
+
+  def book_params
+    params.require(:book).permit(:title, :author, :pages)
   end
 end
