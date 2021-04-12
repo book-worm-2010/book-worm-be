@@ -13,7 +13,7 @@ jobs:
       - restore_cache: 
           key: v2-{{ checksum "Gemfile.lock"}}
       - run: gem install bundler -v 2.1.4
-      - run: bundle install
+      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - save_cache: 
           key: v2-{{ checksum "Gemfile.lock"}}
           paths: 
@@ -39,7 +39,7 @@ jobs:
       - restore_cache:
           key: v2-{{ checksum "Gemfile.lock"}}
       - run: gem install bundler -v 2.1.4
-      - run: bundle install
+      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - run: bundle exec rails db:{create,migrate} RAILS_ENV=test
       - run: bundle exec rspec
       - save_cache:
