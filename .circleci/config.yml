@@ -10,8 +10,14 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
+      - restore_cache: 
+          key: v1-env
       - run: gem install bundler -v 2.1.4
       - run: bundle install
+      - save_cache: 
+          key: v1-env
+          paths: 
+            - "venv"
   test:
     parallelism: 3
     docker: 
@@ -30,22 +36,20 @@ jobs:
       RAILS_ENV: test
     steps:
       - checkout
+      - restore_cache:
+          key: v1-env
       - run: gem install bundler -v 2.1.4
       - run: bundle install
       - run: bundle exec rails db:{create,migrate} RAILS_ENV=test
       - run: bundle exec rspec
+      - save_cache:
+          key: v1-env
+          paths: "venv"
   deploy: 
     executor: heroku/default
-    # environment:
-      # HEROKU_APP: $HEROKU_APP_NAME
-      # HEROKU_API_KEY: $HEROKU_API_KEY
     steps: 
       - checkout
       - heroku/install
-      - run: 
-          command: >
-            echo "The command above installs Heroku, the command below deploys.
-            What you do inbetween is up to you!"
       - heroku/deploy-via-git
 
 workflows:
