@@ -1,26 +1,24 @@
 require 'rails_helper'
 
 describe 'StudentBooks API' do
-  describe 'dashboard' do
+  describe 'dashboard', :vcr do
     it 'creates a new relationship' do
       student = create(:student)
       different_book = create(:book)
-      book = Book.create(title: "Harry Potter and the Sorcerers Stone",
-                         author: "J.K. Rowling",
-                         pages: 345)
-      data =
-       {
-         student_id: student.id,
+      book = Book.create(title: "Harry Potter and the Sorcerer's Stone",
+                         author: "J. K. Rowling",
+                         pages: 336)
+      params =
+       {student_id: student.id,
          book: {
-           title: "Harry Potter and the Sorcerers Stone",
-           author: "J.K. Rowling",
-           pages: 345
+           title: "Harry Potter and the Sorcerer's Stone",
+           author: "J. K. Rowling",
+           pages: 336
          }
-      }
+        }
+      headers = { 'Content-Type' => 'application/json'}
 
-      #get api/v1/student_books
-      post api_v1_student_books_path, params: data
-
+      post api_v1_student_books_path, headers: headers, params: JSON.generate(params)
       expect(response).to be_successful
       new_book = JSON.parse(response.body, symbolize_names: true)[:data]
       expect(new_book[:attributes][:student_id]).to eq(student.id)

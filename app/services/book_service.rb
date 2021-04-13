@@ -4,6 +4,7 @@ class BookService
       response = conn.get('/books/v1/volumes') do |req|
         req.params['key'] = ENV['GOOGLE_API_KEY']
         req.params['q'] = "intitle:#{search_params}+inauthor:#{author}"
+        req.params['langRestrict'] = "en"
       end
       parse_data(response)
     end
