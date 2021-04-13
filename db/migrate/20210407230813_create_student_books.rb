@@ -5,7 +5,7 @@ class CreateStudentBooks < ActiveRecord::Migration[6.1]
       t.references :book, null: false, foreign_key: true
       t.string :status
       t.integer :review
-      t.string :reivew_comment
+      t.string :review_comment
 
       t.timestamps
     end
