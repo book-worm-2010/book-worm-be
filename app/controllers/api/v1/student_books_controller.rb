@@ -20,7 +20,7 @@ class Api::V1::StudentBooksController < ApplicationController
   private
 
   def student_book_params
-    params.permit(:student_id, :book_id, :status, :review, :review_comment)
+    params.permit(:student_id, :book_id, :status, :review, :review_comment, :prediction)
   end
 
   def book_params
