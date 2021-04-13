@@ -2,19 +2,25 @@ require 'rails_helper'
 
 describe "Books API" do
   describe "index" do
-    it "sends a list of books" do
-      create_list(:book, 5)
+    it "sends a list of books", :vcr do
+      book_params =
+      {
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "author": "J. K. Rowling"
+       }
 
-      get '/api/v1/books'
+      headers = { 'Content-Type' => 'application/json'}
+
+      get '/api/v1/books', headers: headers, params: book_params
 
       expect(response).to be_successful
       books = JSON.parse(response.body, symbolize_names: true)
 
-      expect(books[:data].count).to eq(5)
+      expect(books[:data].count).to eq(10)
 
       books[:data].each do |book|
         expect(book).to have_key(:id)
-        expect(book[:id]).to be_an(String)
+        expect(book[:id]).to be_nil
 
         expect(book[:attributes]).to have_key(:title)
         expect(book[:attributes][:title]).to be_a(String)
@@ -24,6 +30,9 @@ describe "Books API" do
 
         expect(book[:attributes]).to have_key(:pages)
         expect(book[:attributes][:pages]).to be_a(Numeric)
+
+        expect(book[:attributes]).to have_key(:isbn)
+        expect(book[:attributes][:isbn]).to be_a(String)
 
       end
     end

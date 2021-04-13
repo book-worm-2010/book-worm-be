@@ -1,10 +1,17 @@
 class Api::V1::BooksController < ApplicationController
   def index
-    if params[:per_page].to_i.negative? || params[:page].to_i.negative?
-      render json: { error: 'bad search query' }, status: :bad_request
-    else
-      render json: BookSerializer.new(Book.paginate(params[:per_page], params[:page]))
+    if params[:title].present? && params[:author].present?
+      books = BookFacade.book_info(book_params)
+      render json: BookSerializer.new(books)
+    else 
+      render json: { error: 'must include both title and author' }, status: :bad_request
     end
+
+    # if params[:per_page].to_i.negative? || params[:page].to_i.negative?
+    #   render json: { error: 'bad search query' }, status: :bad_request
+    # else
+    #   render json: BookSerializer.new(Book.paginate(params[:per_page], params[:page]))
+    # end
   end
 
   def show
@@ -48,6 +55,6 @@ class Api::V1::BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :author, :pages)
+    params.permit(:title, :author)
   end
 end

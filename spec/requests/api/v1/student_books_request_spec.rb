@@ -37,7 +37,7 @@ describe 'StudentBooks API' do
         "book_id": book.id,
         "status": "finished",
         "review": "4",
-        "reivew_comment": "A pretty good book, but I didn't like the ending."
+        "review_comment": "A pretty good book, but I didn't like the ending."
       }
 
       patch api_v1_student_book_path({ id: student_book.id}), params: data
@@ -48,7 +48,7 @@ describe 'StudentBooks API' do
       expect(updated_student_book[:attributes][:book_id]).to eq(book.id)
       expect(updated_student_book[:attributes][:status]).to eq('finished')
       expect(updated_student_book[:attributes][:review]).to eq(4)
-      expect(updated_student_book[:attributes][:reivew_comment]).to eq("A pretty good book, but I didn't like the ending.")
+      expect(updated_student_book[:attributes][:review_comment]).to eq("A pretty good book, but I didn't like the ending.")
     end
 
     it "throws an error if a student book cannot be found" do
@@ -61,7 +61,7 @@ describe 'StudentBooks API' do
         "book_id": book.id,
         "status": "finished",
         "review": "4",
-        "reivew_comment": "A pretty good book, but I didn't like the ending."
+        "review_comment": "A pretty good book, but I didn't like the ending."
       }
 
       patch api_v1_student_book_path({ id: (student_book.id - 1)}), params: data
