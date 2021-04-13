@@ -5,12 +5,15 @@ describe BookFacade do
     it "it create poros of book info through google books api" do 
       params = {title: "Harry Potter and the Sorcerer's Stone",
               author: "J. K. Rowling"}
-      book = BookFacade.book_info(params)
+      books = BookFacade.book_info(params)
       
-      expect(book).to have_attributes(title: "Harry Potter and the Sorcerer's Stone",
-                                      author: "J. K. Rowling",
-                                      pages: 336
-      )
+      books.each do |book|
+        expect(book.title).to be_a(String)
+        expect(book.author).to be_a(String)
+        expect(book.pages).to be_a(Numeric)
+        expect(book.image).to be_a(String)
+        expect(book.isbn).to be_a(String)
+      end
     end
   end
 end

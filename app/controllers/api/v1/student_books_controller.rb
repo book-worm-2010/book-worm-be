@@ -1,6 +1,6 @@
 class Api::V1::StudentBooksController < ApplicationController
   def create
-    book = BookFacade.book_info(book_params)
+    book = Book.find_or_create_by(book_params)
     student_book = StudentBook.new(student_id: params[:student_id], book_id: book.id)
     if student_book.save
       render json: StudentBookSerializer.new(student_book), status: :created
@@ -24,6 +24,6 @@ class Api::V1::StudentBooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author, :pages)
+    params.require(:book).permit(:title, :author, :pages, :isbn, :image)
   end
 end

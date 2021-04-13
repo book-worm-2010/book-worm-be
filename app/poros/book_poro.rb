@@ -1,6 +1,7 @@
 class BookPoro
-  attr_reader :title, :author, :pages, :description, :maturityRating, :image, :isbn
+  attr_reader :id, :title, :author, :pages, :description, :maturityRating, :image, :isbn
   def initialize(data)
+    @id = nil
     @title = data[:title] || "cannot find title"
     @author = data[:authors].to_sentence || "cannot find author"
     @pages = data[:pageCount] || 0

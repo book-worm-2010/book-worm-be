@@ -7,18 +7,21 @@ describe 'StudentBooks API' do
       different_book = create(:book)
       book = Book.create(title: "Harry Potter and the Sorcerer's Stone",
                          author: "J. K. Rowling",
-                         pages: 336)
+                         pages: 336,
+                         isbn: "4535232536462")
       params =
        {student_id: student.id,
          book: {
            title: "Harry Potter and the Sorcerer's Stone",
            author: "J. K. Rowling",
-           pages: 336
+           pages: 336,
+           isbn: "4535232536462"
          }
         }
       headers = { 'Content-Type' => 'application/json'}
 
       post api_v1_student_books_path, headers: headers, params: JSON.generate(params)
+      # binding.pry
       expect(response).to be_successful
       new_book = JSON.parse(response.body, symbolize_names: true)[:data]
       expect(new_book[:attributes][:student_id]).to eq(student.id)
