@@ -1,7 +1,8 @@
 class Api::V1::StudentBooksController < ApplicationController
   def create
+    # require 'pry'; binding.pry
     book = Book.find_or_create_by(book_params)
-    student_book = StudentBook.new(student_id: params[:student_id], book_id: book.id)
+    student_book = StudentBook.new(student_id: params[:student_id], book_id: book.id, prediction: params[:prediction])
     if student_book.save
       render json: StudentBookSerializer.new(student_book), status: :created
     else
@@ -14,7 +15,7 @@ class Api::V1::StudentBooksController < ApplicationController
     student_book.update!(student_book_params)
     render json: StudentBookSerializer.new(student_book)
   rescue StandardError
-      render json: { 'error' => {} }, status: 404
+    render json: { 'error' => {} }, status: 404
   end
 
   private
