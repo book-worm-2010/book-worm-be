@@ -19,6 +19,8 @@ gem 'jwt'
 gem 'fast_jsonapi'
 gem 'faraday'
 gem 'figaro'
+gem 'webpush'
+gem 'serviceworker-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

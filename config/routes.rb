@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :web_push_notifications
   namespace :api do
     namespace :v1 do
       resources :books do
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
         get 'books', on: :collection
         get 'bookmarks', on: :collection
       end
+      resources :subscriptions, only: :create
       resources :student_books, only: %i[create update]
       resources :bookmarks, only: :create
     end
