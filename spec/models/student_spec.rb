@@ -9,4 +9,20 @@ RSpec.describe Student, type: :model do
     it { should have_many(:student_books) }
     it { should have_many(:books).through(:student_books) }
   end
+  describe 'instance methods' do
+    it 'finds books based on status' do
+      books = create_list(:book, 3)
+      finished_books = create_list(:book, 2)
+      student = create(:student)
+      books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'reading')
+      end
+      finished_books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'finished')
+      end
+      expect(student.specific_books('reading')).to eq(books)
+      expect(student.specific_books('finished')).to eq(finished_books)
+      expect(student.specific_books('abandoned')).to eq([])
+    end
+  end
 end
