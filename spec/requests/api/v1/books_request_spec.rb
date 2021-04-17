@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-describe "Books API" do
-  describe "index" do
-    it "sends a list of books", :vcr do
+describe 'Books API' do
+  describe 'index' do
+    it 'sends a list of books', :vcr do
       book_params =
-      {
-        "title": "Harry Potter and the Sorcerer's Stone",
-        "author": "J. K. Rowling"
-       }
+        {
+          "title": "Harry Potter and the Sorcerer's Stone",
+          "author": 'J. K. Rowling'
+        }
 
-      headers = { 'Content-Type' => 'application/json'}
+      headers = { 'Content-Type' => 'application/json' }
 
       get '/api/v1/books', headers: headers, params: book_params
 
@@ -33,40 +33,54 @@ describe "Books API" do
 
         expect(book[:attributes]).to have_key(:isbn)
         expect(book[:attributes][:isbn]).to be_a(String)
-
       end
+    end
+
+    it 'sends an error if title and author are not present', :vcr do
+      book_params =
+        {
+          "title": "Harry Potter and the Sorcerer's Stone"
+        }
+
+      headers = { 'Content-Type' => 'application/json' }
+
+      get '/api/v1/books', headers: headers, params: book_params
+
+      expect(response).to_not be_successful
+      error = JSON.parse(response.body, symbolize_names: true)
+      expect(error[:error]).to eq('must include both title and author')
     end
   end
 
-    # it "will paginate when list is greater than 20" do
-    #   create_list(:book, 25)
+  # it "will paginate when list is greater than 20" do
+  #   create_list(:book, 25)
 
-    #   get '/api/v1/books'
+  #   get '/api/v1/books'
 
-    #   expect(response).to be_successful
-    #   books = JSON.parse(response.body, symbolize_names: true)
+  #   expect(response).to be_successful
+  #   books = JSON.parse(response.body, symbolize_names: true)
 
-    #   expect(books[:data].count).to eq(20)
-    # end
+  #   expect(books[:data].count).to eq(20)
+  # end
 
-    # describe "show" do
-    #   it "sends 1 book by title" do
-    #     book = create(:book)
-    #     expected_attributes = {
-    #       title: book.title,
-    #       author: book.author,
-    #       pages: book.pages
-    #     }
+  # describe "show" do
+  #   it "sends 1 book by title" do
+  #     book = create(:book)
+  #     expected_attributes = {
+  #       title: book.title,
+  #       author: book.author,
+  #       pages: book.pages
+  #     }
 
-    #     get "/api/v1/books/#{book.id}"
-    #     expect(response.status).to eq(200)
-    #     json = JSON.parse(response.body, symbolize_names: true)
-    #     expect(json[:data][:id]).to eq(book.id.to_s)
-    #     expected_attributes.each do |attribute, value|
-    #       expect(json[:data][:attributes][attribute]).to eq(value)
-    #     end
-    #   end
-    # end
+  #     get "/api/v1/books/#{book.id}"
+  #     expect(response.status).to eq(200)
+  #     json = JSON.parse(response.body, symbolize_names: true)
+  #     expect(json[:data][:id]).to eq(book.id.to_s)
+  #     expected_attributes.each do |attribute, value|
+  #       expect(json[:data][:attributes][attribute]).to eq(value)
+  #     end
+  #   end
+  # end
 
   #   describe "find all" do
   #     it "can find all books based on title" do

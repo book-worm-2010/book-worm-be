@@ -1,12 +1,17 @@
 class Api::V1::StudentBooksController < ApplicationController
   def create
-    # require 'pry'; binding.pry
     book = Book.find_or_create_by(book_params)
-    student_book = StudentBook.new(student_id: params[:student_id], book_id: book.id, prediction: params[:prediction])
-    if student_book.save
-      render json: StudentBookSerializer.new(student_book), status: :created
+    student = Student.find(params[:student_id])
+    if student.specific_books('reading').count < 5
+      student_book = StudentBook.new(student_id: params[:student_id], book_id: book.id, prediction: params[:prediction],
+                                     status: 'reading')
+      if student_book.save
+        render json: StudentBookSerializer.new(student_book), status: :created
+      else
+        render json: { error: 'all book information must be included' }, status: :conflict
+      end
     else
-      render json: { data: {} }, status: :conflict
+      render json: { error: 'student can only have 5 active books' }, status: :conflict
     end
   end
 

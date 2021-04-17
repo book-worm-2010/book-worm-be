@@ -3,15 +3,9 @@ class Api::V1::BooksController < ApplicationController
     if params[:title].present? && params[:author].present?
       books = BookFacade.book_info(book_params)
       render json: BookSerializer.new(books)
-    else 
+    else
       render json: { error: 'must include both title and author' }, status: :bad_request
     end
-
-    # if params[:per_page].to_i.negative? || params[:page].to_i.negative?
-    #   render json: { error: 'bad search query' }, status: :bad_request
-    # else
-    #   render json: BookSerializer.new(Book.paginate(params[:per_page], params[:page]))
-    # end
   end
 
   def show
