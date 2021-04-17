@@ -83,7 +83,7 @@ describe 'StudentBooks API' do
         "review_comment": "A pretty good book, but I didn't like the ending."
       }
 
-      patch api_v1_student_book_path({ id: student_book.id }), params: data
+      patch api_v1_student_book_path({ id: 1 }), params: data
 
       expect(response).to be_successful
       updated_student_book = JSON.parse(response.body, symbolize_names: true)[:data]
@@ -97,7 +97,6 @@ describe 'StudentBooks API' do
     it 'throws an error if a student book cannot be found' do
       student = create(:student)
       book = create(:book)
-      student_book = StudentBook.create!(student_id: student.id, book_id: book.id)
 
       data = {
         "student_id": student.id,
@@ -107,8 +106,7 @@ describe 'StudentBooks API' do
         "review_comment": "A pretty good book, but I didn't like the ending."
       }
 
-      patch api_v1_student_book_path({ id: (student_book.id - 1) }), params: data
-
+      patch api_v1_student_book_path({ id: 1 }), params: data
       expect(response).to_not be_successful
     end
 
