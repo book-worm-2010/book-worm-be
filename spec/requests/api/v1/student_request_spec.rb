@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Students API' do
-  describe 'dashboard' do
+  describe 'student books' do
     it 'sends a list of books' do
       books = create_list(:book, 3)
       finished_books = create_list(:book, 2)
@@ -36,6 +36,93 @@ describe 'Students API' do
         expect(book[:attributes]).to have_key(:pages)
         expect(book[:attributes][:pages]).to be_a(Numeric)
       end
+    end
+
+    it 'sends a list of books with finished status' do
+      books = create_list(:book, 3)
+      finished_books = create_list(:book, 2)
+      student = create(:student)
+      books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'reading')
+      end
+      finished_books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'finished')
+      end
+
+      data = {
+        "id": student.id,
+        "status": 'finished'
+      }
+
+      get books_api_v1_students_path, params: data
+      expect(response).to be_successful
+      found_books = JSON.parse(response.body, symbolize_names: true)
+      expect(found_books[:data].count).to eq(2)
+    end
+
+    it 'sends a list of books with abandoned status' do
+      books = create_list(:book, 3)
+      finished_books = create_list(:book, 2)
+      student = create(:student)
+      books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'reading')
+      end
+      finished_books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'finished')
+      end
+
+      data = {
+        "id": student.id,
+        "status": 'abandoned'
+      }
+
+      get books_api_v1_students_path, params: data
+      expect(response).to be_successful
+      found_books = JSON.parse(response.body, symbolize_names: true)
+      expect(found_books[:data].count).to eq(0)
+    end
+
+    it 'sends a list of books without status' do
+      books = create_list(:book, 3)
+      finished_books = create_list(:book, 2)
+      student = create(:student)
+      books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'reading')
+      end
+      finished_books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'finished')
+      end
+
+      data = {
+        "id": student.id
+      }
+
+      get books_api_v1_students_path, params: data
+      expect(response).to be_successful
+      found_books = JSON.parse(response.body, symbolize_names: true)
+      expect(found_books[:data].count).to eq(5)
+    end
+
+    it 'sends an empty data array if status is not an option' do
+      books = create_list(:book, 3)
+      finished_books = create_list(:book, 2)
+      student = create(:student)
+      books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'reading')
+      end
+      finished_books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'finished')
+      end
+
+      data = {
+        "id": student.id,
+        "status": 'this is not an option'
+      }
+
+      get books_api_v1_students_path, params: data
+      expect(response).to be_successful
+      found_books = JSON.parse(response.body, symbolize_names: true)
+      expect(found_books[:data].count).to eq(0)
     end
 
     it 'sends a list of bookmarks' do

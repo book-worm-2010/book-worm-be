@@ -1,7 +1,11 @@
 class Api::V1::StudentsController < ApplicationController
   def books
     student = Student.find(params[:id])
-    books = student.books.where('student_books.status = ?', params[:status])
+    books = if params[:status]
+              student.specific_books(params[:status])
+            else
+              student.books
+            end
     render json: BookSerializer.new(books.paginate(params[:per_page], params[:page]))
   end
 
