@@ -4,7 +4,7 @@ class Api::V1::BookmarksController < ApplicationController
     if bookmark.save
       render json: BookmarkSerializer.new(bookmark), status: :created
     else
-      render json: { 'error' => {} }, status: 404
+      render json: { 'error' => 'must include minutes' }, status: 404
     end
   end
 
