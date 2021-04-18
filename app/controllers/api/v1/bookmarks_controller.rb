@@ -1,6 +1,6 @@
 class Api::V1::BookmarksController < ApplicationController
   def create
-    student_book = StudentBook.where(student_id: params[:student_id], book_id: params[:book_id]).first
+    student_book = StudentBook.find_by(student_id: params[:student_id], book_id: params[:book_id])
     bookmark = Bookmark.new(bookmark_params)
     bookmark.update(student_book_id: student_book.id)
     if bookmark.save
