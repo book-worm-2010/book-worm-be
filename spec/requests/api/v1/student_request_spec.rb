@@ -138,13 +138,14 @@ describe 'Students API' do
       Bookmark.create!(student_book_id: student_book2.id, date: Date.today, minutes: 25, page_number: 60)
 
       data = {
-        "id": student.id
+        "student_id": student.id,
+        "book_id": book.id
       }
 
       get bookmarks_api_v1_students_path, params: data
       expect(response).to be_successful
       found_bookmarks = JSON.parse(response.body, symbolize_names: true)
-      expect(found_bookmarks[:data].count).to eq(4)
+      expect(found_bookmarks[:data].count).to eq(2)
 
       found_bookmarks[:data].each do |bookmark|
         expect(bookmark).to have_key(:id)

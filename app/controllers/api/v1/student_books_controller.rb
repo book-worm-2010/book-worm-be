@@ -16,11 +16,11 @@ class Api::V1::StudentBooksController < ApplicationController
   end
 
   def update
-    student_book = StudentBook.find(params[:id])
+    student_book = StudentBook.find_by(student_id: params[:student_id], book_id: params[:book_id])
     student_book.update!(student_book_params)
     render json: StudentBookSerializer.new(student_book)
   rescue StandardError
-    render json: { 'error' => {} }, status: 404
+    render json: { 'error' => 'something went wrong' }, status: 404
   end
 
   private

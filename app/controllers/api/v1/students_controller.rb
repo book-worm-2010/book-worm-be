@@ -10,8 +10,8 @@ class Api::V1::StudentsController < ApplicationController
   end
 
   def bookmarks
-    student = Student.find(params[:id])
-    bookmarks = student.student_books.map do |student_book|
+    student_books = StudentBook.where(student_id: params[:student_id], book_id: params[:book_id])
+    bookmarks = student_books.map do |student_book|
       student_book.bookmarks
     end.flatten
     render json: BookmarkSerializer.new(bookmarks)
