@@ -66,5 +66,5 @@ workflows:
           filters: 
             branches:
               only: main
-          post-deploy: 
+          post-steps: 
             - run: rails db:migrate
