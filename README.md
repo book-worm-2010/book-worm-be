@@ -111,9 +111,11 @@ Deployed on Heroku
 **POST** `https://book-worm-be.herokuapp.com/api/v1/bookmarks`
 *{"student_id": 1,
    "book_id": 1,
-   "date": "e",
+   "date": "this is a date",
    "minutes": 30,
-   "page_number": 45}*
+   "page_number": 45,
+   "notes": "these are notes",
+   "reaction": "this is a reaction"}*
    
 ### Find Bookmarks for a Specific Book
 **GET** `https://book-worm-be.herokuapp.com/api/v1/students/bookmarks`
