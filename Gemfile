@@ -15,10 +15,13 @@ gem 'puma', '~> 5.0'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'jwt'
-gem 'fast_jsonapi'
 gem 'faraday'
+gem 'fast_jsonapi'
 gem 'figaro'
+gem 'google-api-client'
+gem 'jwt'
+gem 'omniauth-google-oauth2'
+gem 'signet'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -28,8 +31,8 @@ gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'travis'
   gem 'pry'
+  gem 'travis'
 end
 
 group :development do
@@ -37,16 +40,16 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails'
   gem 'capybara'
-  gem 'launchy'
-  gem 'shoulda-matchers'
-  gem 'simplecov'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'webmock'
+  gem 'launchy'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'simplecov'
   gem 'vcr'
+  gem 'webmock'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
