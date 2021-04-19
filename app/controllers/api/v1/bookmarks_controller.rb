@@ -13,6 +13,6 @@ class Api::V1::BookmarksController < ApplicationController
   private
 
   def bookmark_params
-    params.permit(:date, :minutes, :page_number)
+    params.permit(:date, :minutes, :page_number, :notes, :reactions)
   end
 end
