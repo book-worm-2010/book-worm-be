@@ -151,3 +151,16 @@ Contributions are what make the open source community such an amazing place to b
 - Catherine Dean - [Github](https://github.com/catherinemdean15) [LinkedIn](https://www.linkedin.com/in/catherine-dean-57a92030/)
 - Joe Jiang - [Github](https://github.com/ninesky00) [LinkedIn](https://www.linkedin.com/in/joe-jiang01/)
 
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/run-the-jules/joules-utility-microservice.svg?style=for-the-badge
+[contributors-url]: https://github.com/run-the-jules/joules-utility-microservice/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/run-the-jules/joules-utility-microservice.svg?style=for-the-badge
+[forks-url]: https://github.com/run-the-jules/joules-utility-microservice/network/members
+[stars-shield]: https://img.shields.io/github/stars/run-the-jules/joules-utility-microservice.svg?style=for-the-badge
+[stars-url]: https://github.com/run-the-jules/joules-utility-microservice/stargazers
+[issues-shield]: https://img.shields.io/github/issues/run-the-jules/joules-utility-microservice.svg?style=for-the-badge
+[issues-url]: https://github.com/run-the-jules/joules-utility-microservice/issues
+[product-screenshot]: images/screenshot.png
