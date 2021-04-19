@@ -1,4 +1,13 @@
 class Api::V1::StudentsController < ApplicationController
+  def login
+    student = Student.find_or_create_by(student_params)
+    if student.save
+      render json: StudentSerializer.new(student)
+    else
+      render json: { error: 'please include both email and name' }, status: :conflict
+    end
+  end
+
   def books
     student = Student.find(params[:id])
     books = if params[:status]
@@ -15,5 +24,11 @@ class Api::V1::StudentsController < ApplicationController
       student_book.bookmarks
     end.flatten
     render json: BookmarkSerializer.new(bookmarks)
+  end
+
+  private
+
+  def student_params
+    params.permit(:name, :email)
   end
 end

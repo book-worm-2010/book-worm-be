@@ -162,4 +162,48 @@ describe 'Students API' do
       end
     end
   end
+
+  describe 'login' do
+    it 'returns current student information' do
+      student = create(:student)
+      params = {
+        "email": student.email,
+        "name": student.name
+      }
+
+      get login_api_v1_students_path, params: params
+
+      expect(response).to be_successful
+      found_student = JSON.parse(response.body, symbolize_names: true)[:data]
+      expect(found_student[:id]).to eq(student.id.to_s)
+      expect(found_student[:attributes][:name]).to eq(student.name)
+      expect(found_student[:attributes][:email]).to eq(student.email)
+    end
+
+    it 'returns new student information' do
+      params = {
+        "email": 'anewemail@email.com',
+        "name": 'Student Name'
+      }
+
+      get login_api_v1_students_path, params: params
+
+      expect(response).to be_successful
+      new_student = JSON.parse(response.body, symbolize_names: true)[:data]
+      expect(new_student).to have_key(:id)
+      expect(new_student[:attributes][:name]).to eq('Student Name')
+      expect(new_student[:attributes][:email]).to eq('anewemail@email.com')
+    end
+
+    it 'gives an error if all fields are not given' do
+      params = {
+        "email": 'anewemail@email.com'
+      }
+
+      get login_api_v1_students_path, params: params
+      expect(response).to_not be_successful
+      error = JSON.parse(response.body, symbolize_names: true)
+      expect(error[:error]).to eq('please include both email and name')
+    end
+  end
 end
