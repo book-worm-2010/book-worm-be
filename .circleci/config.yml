@@ -50,7 +50,6 @@ jobs:
     steps: 
       - checkout
       - heroku/install
-      - run: heroku run rails db:migrate
       - heroku/deploy-via-git
 
 workflows:
