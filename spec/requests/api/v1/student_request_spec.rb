@@ -57,7 +57,6 @@ describe 'Students API' do
       get books_api_v1_students_path, params: data
       expect(response).to be_successful
       found_books = JSON.parse(response.body, symbolize_names: true)
-      binding.pry
       expect(found_books[:data].count).to eq(2)
     end
 
