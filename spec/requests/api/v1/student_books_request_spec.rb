@@ -124,4 +124,26 @@ describe 'StudentBooks API' do
       expect(response).to_not be_successful
     end
   end
+
+  describe "index" do 
+    it "retrieves all books with student reviews and comments" do 
+      student = create(:student)
+      student2 = create(:student)
+      books = create_list(:book, 5)
+      books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'reading')
+      end
+      different_book = create(:book)
+      StudentBook.create!(book_id: different_book.id, student_id: student2.id, status: 'reading')
+
+      student_id_param = { student_id: student.id }
+      get '/api/v1/student_books', params: student_id_param
+      expect(response).to be_successful
+      student_books = JSON.parse(response.body, symbolize_names: true)[:data]
+      student_books.each_with_index do |entry, idx|
+        expect(entry[:id]).to eq(books[idx].id.to_s)
+        expect(entry[:attributes][:student_id]).to eq(student.id)
+      end
+    end
+  end
 end
