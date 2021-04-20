@@ -1,4 +1,13 @@
 class Api::V1::StudentBooksController < ApplicationController
+  def index 
+    if params[:student_id].present?
+      reviews_by_student = StudentBook.where(student_id: params[:student_id])
+      render json: StudentBookSerializer.new(reviews_by_student)
+    else
+      render json: { error: 'bad request'}, status: :not_found
+    end
+  end
+  
   def create
     book = Book.find_or_create_by(book_params)
     student = Student.find(params[:student_id])

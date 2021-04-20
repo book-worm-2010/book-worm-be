@@ -10,7 +10,7 @@ Rails.application.routes.draw do
         get 'bookmarks', on: :collection
         get 'login', on: :collection
       end
-      resources :student_books, only: %i[create update]
+      resources :student_books, only: %i[index create update]
       resources :bookmarks, only: :create
     end
   end
