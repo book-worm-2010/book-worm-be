@@ -141,9 +141,30 @@ describe 'StudentBooks API' do
       expect(response).to be_successful
       student_books = JSON.parse(response.body, symbolize_names: true)[:data]
       student_books.each_with_index do |entry, idx|
-        expect(entry[:id]).to eq(books[idx].id.to_s)
+        expect(entry).to have_key(:id)
+        expect(entry[:type]).to eq("student_book")
+        expect(entry).to have_key(:attributes)
         expect(entry[:attributes][:student_id]).to eq(student.id)
+        expect(entry[:attributes]).to have_key(:review)
+        expect(entry[:attributes]).to have_key(:review_comment)
       end
+    end
+  end
+
+  describe "index sad path" do 
+    it "errors when student_id is not present" do 
+      student = create(:student)
+      student2 = create(:student)
+      books = create_list(:book, 5)
+      books.each do |book|
+        StudentBook.create!(book_id: book.id, student_id: student.id, status: 'reading')
+      end
+      different_book = create(:book)
+      StudentBook.create!(book_id: different_book.id, student_id: student2.id, status: 'reading')
+
+      student_id_param = { student_id: ""}
+      get '/api/v1/student_books', params: student_id_param
+      expect(response).to_not be_successful
     end
   end
 end

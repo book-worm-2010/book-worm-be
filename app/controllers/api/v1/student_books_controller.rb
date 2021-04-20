@@ -4,7 +4,7 @@ class Api::V1::StudentBooksController < ApplicationController
       reviews_by_student = StudentBook.where(student_id: params[:student_id])
       render json: StudentBookSerializer.new(reviews_by_student)
     else
-      render json: { error: 'bad request'}, status: not_found
+      render json: { error: 'bad request'}, status: :not_found
     end
   end
   
