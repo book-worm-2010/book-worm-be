@@ -1,13 +1,14 @@
 [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![book-worm-2010](https://circleci.com/gh/book-worm-2010/book-worm-be.svg?style=svg)](https://github.com/book-worm-2010/book-worm-be)
+<!-- [![Forks][forks-shield]][forks-url] -->
+<!-- [![Stargazers][stars-shield]][stars-url] -->
 
 # book-worm-be
 
 ### About this App
 
-book-worm-be is the server-side application of BookWorm. It stores some information on users and the books they are reading as well as their 'bookmarks'. This app consumes the Google Books API and exposes relevant information for the front-end side of BookWorm. 
+book-worm-be is the server-side application of [BookWorm](https://book-worm-2.herokuapp.com/home). It stores some information on users and the books they are reading as well as their 'bookmarks'. This app consumes the Google Books API and exposes relevant information for the [front-end](https://github.com/book-worm-2010/book-worm-fe) side of BookWorm. 
 
 
 ### Goals accomplished
@@ -15,8 +16,8 @@ Consumed Google Books API
 Robust unit and integration testing to ensure data quality  
 Navigate working together with a larger application base with many moving parts  
 Learned application design from the perspective of users' needs  
-Setup continuous integration and deployment   
-Deployed on Heroku
+Setup continuous integration and deployment with CircleCI
+Deployed on Heroku(see endpoints)
 
 
 ## Versions
@@ -157,12 +158,12 @@ Contributions are what make the open source community such an amazing place to b
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/run-the-jules/joules-utility-microservice.svg?style=for-the-badge
-[contributors-url]: https://github.com/run-the-jules/joules-utility-microservice/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/run-the-jules/joules-utility-microservice.svg?style=for-the-badge
-[forks-url]: https://github.com/run-the-jules/joules-utility-microservice/network/members
-[stars-shield]: https://img.shields.io/github/stars/run-the-jules/joules-utility-microservice.svg?style=for-the-badge
-[stars-url]: https://github.com/run-the-jules/joules-utility-microservice/stargazers
-[issues-shield]: https://img.shields.io/github/issues/run-the-jules/joules-utility-microservice.svg?style=for-the-badge
-[issues-url]: https://github.com/run-the-jules/joules-utility-microservice/issues
+[contributors-shield]: https://img.shields.io/github/contributors/book-worm-2010/book-worm-be.svg?style=for-the-badge
+[contributors-url]: https://github.com/book-worm-2010/book-worm-be/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/book-worm-2010/book-worm-be.svg?style=for-the-badge
+[forks-url]: https://img.shields.io/github/forks/book-worm-2010/book-worm-be
+[stars-shield]: https://img.shields.io/github/stars/book-worm-2010/book-worm-be.svg?style=for-the-badge
+[stars-url]: https://github.com/book-worm-2010/book-worm-be/stargazers
+[issues-shield]: https://img.shields.io/github/issues/book-worm-2010/book-worm-be
+[issues-url]: https://github.com/book-worm-2010/book-worm-be/issues
 [product-screenshot]: images/screenshot.png
