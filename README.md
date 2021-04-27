@@ -16,7 +16,7 @@ Consumed Google Books API
 Robust unit and integration testing to ensure data quality  
 Navigate working together with a larger application base with many moving parts  
 Learned application design from the perspective of users' needs  
-Setup continuous integration and deployment with CircleCI
+Setup continuous integration and deployment with CircleCI  
 Deployed on Heroku(see endpoints)
 
 
