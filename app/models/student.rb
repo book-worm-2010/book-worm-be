@@ -5,6 +5,6 @@ class Student < ApplicationRecord
   has_many :books, through: :student_books
 
   def specific_books(status)
-    books.where('student_books.status = ?', status)
+    student_books.where('student_books.status = ?', status)
   end
 end
