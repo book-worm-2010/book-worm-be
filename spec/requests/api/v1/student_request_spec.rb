@@ -23,9 +23,23 @@ describe 'Students API' do
       found_books = JSON.parse(response.body, symbolize_names: true)
       expect(found_books[:data].count).to eq(3)
 
-      found_books[:data].each do |book|
+      found_books[:data].each do |student_book|
+        expect(student_book).to have_key(:id)
+        expect(student_book[:id]).to be_a(String)
+
+        expect(student_book[:attributes]).to have_key(:student_id)
+        expect(student_book[:attributes][:student_id]).to be_a(Integer)
+
+        expect(student_book[:attributes]).to have_key(:book_id)
+        expect(student_book[:attributes][:book_id]).to be_a(Integer)
+
+        expect(student_book[:attributes]).to have_key(:status)
+        expect(student_book[:attributes][:status]).to be_a(String)
+      end
+
+      found_books[:included].each do |book|
         expect(book).to have_key(:id)
-        expect(book[:id]).to be_an(String)
+        expect(book[:id]).to be_a(String)
 
         expect(book[:attributes]).to have_key(:title)
         expect(book[:attributes][:title]).to be_a(String)
@@ -33,8 +47,14 @@ describe 'Students API' do
         expect(book[:attributes]).to have_key(:author)
         expect(book[:attributes][:author]).to be_a(String)
 
+        expect(book[:attributes]).to have_key(:isbn)
+        expect(book[:attributes][:isbn]).to be_a(String)
+
         expect(book[:attributes]).to have_key(:pages)
-        expect(book[:attributes][:pages]).to be_a(Numeric)
+        expect(book[:attributes][:pages]).to be_a(Integer)
+
+        expect(book[:attributes]).to have_key(:image)
+        expect(book[:attributes][:image]).to be_a(String)
       end
     end
 

@@ -14,14 +14,14 @@ RSpec.describe Student, type: :model do
       books = create_list(:book, 3)
       finished_books = create_list(:book, 2)
       student = create(:student)
-      books.each do |book|
+      student_books = books.map do |book|
         StudentBook.create!(book_id: book.id, student_id: student.id, status: 'reading')
       end
-      finished_books.each do |book|
+      student_finished_books = finished_books.map do |book|
         StudentBook.create!(book_id: book.id, student_id: student.id, status: 'finished')
       end
-      expect(student.specific_books('reading')).to eq(books)
-      expect(student.specific_books('finished')).to eq(finished_books)
+      expect(student.specific_books('reading')).to eq(student_books)
+      expect(student.specific_books('finished')).to eq(student_finished_books)
       expect(student.specific_books('abandoned')).to eq([])
     end
   end
