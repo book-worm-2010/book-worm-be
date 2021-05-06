@@ -29,6 +29,6 @@ class Api::V1::StudentsController < ApplicationController
   private
 
   def student_params
-    params.permit(:name, :email)
+    params.permit(:name, :email, :google_token)
   end
 end
